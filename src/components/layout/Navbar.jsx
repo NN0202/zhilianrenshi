@@ -62,7 +62,14 @@ export default function Navbar() {
           </span>
         </div>
 
-        <div style={{ display: "flex", minHeight: "72px", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            height: "72px",
+            alignItems: "stretch",
+            flexWrap: "wrap",
+          }}
+        >
           {tabs.map((tab) => (
             <NavLink
               key={tab.path}
@@ -70,6 +77,7 @@ export default function Navbar() {
               style={({ isActive }) => ({
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
                 padding: "0 18px",
                 textDecoration: "none",
@@ -77,10 +85,9 @@ export default function Navbar() {
                 borderBottom: isActive
                   ? "2px solid var(--accent-primary)"
                   : "2px solid transparent",
-                height: "100%",
+                height: "72px",
                 fontWeight: isActive ? 600 : 400,
-                position: "relative",
-                top: "1px",
+                lineHeight: 1,
                 transition: "color 0.2s ease, border-color 0.2s ease",
               })}
             >
