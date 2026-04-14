@@ -1,83 +1,158 @@
-import React from 'react';
-import { TrendingUp, ArrowRight } from 'lucide-react';
+import { TrendingUp, ArrowRight } from "lucide-react";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { roleLabels } from "../../i18n/translations";
 
 const gapCards = [
-  { id: "rd", label: "技术研发人员", gap: "moderate", demand: 1240, supply: 980, trend: "stable", color: "var(--node-rd)" },
-  { id: "mfg", label: "制造与运维人员", gap: "low", demand: 3200, supply: 2900, trend: "stable", color: "var(--node-mfg)" },
-  { id: "biz", label: "国际业务人员", gap: "high", demand: 860, supply: 420, trend: "rapid", color: "var(--node-biz)" },
-  { id: "support", label: "远程售后技术支持", gap: "high", demand: 720, supply: 310, trend: "rapid", color: "var(--node-support)" },
+  { id: "rd", gap: "moderate", demand: 1240, supply: 980, trend: "stable", color: "var(--node-rd)" },
+  { id: "mfg", gap: "low", demand: 3200, supply: 2900, trend: "stable", color: "var(--node-mfg)" },
+  { id: "biz", gap: "high", demand: 860, supply: 420, trend: "rapid", color: "var(--node-biz)" },
+  { id: "support", gap: "high", demand: 720, supply: 310, trend: "rapid", color: "var(--node-support)" },
 ];
 
-const gapConfig = {
-  high: { text: "高缺口", color: "var(--accent-danger)" },
-  moderate: { text: "中缺口", color: "var(--accent-warn)" },
-  low: { text: "低缺口", color: "var(--accent-success)" }
-};
-
 export default function GapSummaryCards() {
+  const { language, copy } = useLanguage();
+  const formatter = new Intl.NumberFormat(copy.locale);
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', height: '100%' }}>
-      {gapCards.map(card => {
-        const conf = gapConfig[card.gap];
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+        gap: "18px",
+      }}
+    >
+      {gapCards.map((card) => {
         const percent = Math.min(100, (card.supply / card.demand) * 100);
-        
+        const gapText = copy.forecast.gaps[card.gap];
+        const trendText =
+          card.trend === "rapid"
+            ? copy.forecast.rapidGrowth
+            : copy.forecast.steadyGrowth;
+
         return (
-          <div key={card.id} style={{
-            backgroundColor: 'var(--glass-bg)',
-            border: '1px solid var(--glass-border)',
-            borderRadius: '12px',
-            padding: '24px 20px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            backdropFilter: 'blur(var(--glass-blur))',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '15px', color: 'var(--text-secondary)', fontWeight: '500' }}>
-                {card.label}
+          <div
+            key={card.id}
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--glass-border)",
+              borderRadius: "24px",
+              padding: "22px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              boxShadow: "var(--shadow-soft)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+              <span
+                style={{
+                  fontSize: "16px",
+                  color: "var(--text-secondary)",
+                  fontWeight: 600,
+                }}
+              >
+                {roleLabels[card.id][language]}
               </span>
-              <span style={{ 
-                fontSize: '12px', 
-                padding: '4px 10px', 
-                borderRadius: '16px', 
-                backgroundColor: `${conf.color}20`, 
-                color: conf.color,
-                border: `1px solid ${conf.color}50`,
-                fontWeight: 'bold',
-                letterSpacing: '1px'
-              }}>
-                {conf.text}
+              <span
+                style={{
+                  fontSize: "12px",
+                  padding: "4px 10px",
+                  borderRadius: "999px",
+                  backgroundColor:
+                    card.gap === "high"
+                      ? "rgba(181, 51, 51, 0.1)"
+                      : card.gap === "moderate"
+                        ? "rgba(183, 128, 54, 0.12)"
+                        : "rgba(111, 138, 85, 0.12)",
+                  color:
+                    card.gap === "high"
+                      ? "var(--accent-danger)"
+                      : card.gap === "moderate"
+                        ? "var(--accent-warn)"
+                        : "var(--accent-success)",
+                  border: "1px solid rgba(209, 207, 197, 0.7)",
+                  fontWeight: 600,
+                }}
+              >
+                {gapText}
               </span>
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '20px 0' }}>
-              <span style={{ fontFamily: 'var(--font-display)', fontSize: '36px', color: card.color, lineHeight: 1 }}>
-                {card.demand}
-              </span>
-              <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>预测需求 (人)</span>
-              
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '4px', color: card.trend === 'rapid' ? 'var(--accent-warn)' : 'var(--accent-primary)' }}>
-                {card.trend === 'rapid' ? <TrendingUp size={18} /> : <ArrowRight size={18} />}
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>
-                  {card.trend === 'rapid' ? '快速增长' : '稳定增长'}
-                </span>
-              </div>
             </div>
 
-            <div style={{ marginTop: 'auto' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                <span>当前供给: <strong style={{ color: 'var(--text-primary)' }}>{card.supply}</strong></span>
-                <span>{percent.toFixed(0)}% 满足度</span>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "42px",
+                  color: card.color,
+                  lineHeight: 1,
+                }}
+              >
+                {formatter.format(card.demand)}
+              </span>
+              <span style={{ fontSize: "14px", color: "var(--text-muted)" }}>
+                {copy.forecast.predictedDemand} ({copy.forecast.peopleUnit})
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: "var(--text-secondary)",
+                fontSize: "14px",
+                gap: "8px",
+              }}
+            >
+              <span>
+                {copy.forecast.currentSupply}:{" "}
+                <strong style={{ color: "var(--text-primary)" }}>
+                  {formatter.format(card.supply)}
+                </strong>
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  color: card.trend === "rapid" ? "var(--accent-warn)" : "var(--accent-secondary)",
+                }}
+              >
+                {card.trend === "rapid" ? <TrendingUp size={16} /> : <ArrowRight size={16} />}
+                {trendText}
+              </span>
+            </div>
+
+            <div style={{ marginTop: "auto" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontSize: "13px",
+                  color: "var(--text-secondary)",
+                  marginBottom: "8px",
+                }}
+              >
+                <span>{copy.forecast.fulfillment}</span>
+                <span>{percent.toFixed(0)}%</span>
               </div>
-              <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--bg-elevated)', borderRadius: '3px', overflow: 'hidden' }}>
-                <div style={{ 
-                  width: `${percent}%`, 
-                  height: '100%', 
-                  backgroundColor: card.color, 
-                  borderRadius: '3px',
-                  boxShadow: `0 0 10px ${card.color}`
-                }} />
+              <div
+                style={{
+                  width: "100%",
+                  height: "8px",
+                  backgroundColor: "var(--bg-elevated)",
+                  borderRadius: "999px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    width: `${percent}%`,
+                    height: "100%",
+                    backgroundColor: card.color,
+                    borderRadius: "999px",
+                  }}
+                />
               </div>
             </div>
           </div>
