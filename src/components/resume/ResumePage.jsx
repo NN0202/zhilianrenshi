@@ -22,7 +22,7 @@ export default function ResumePage() {
 
   useEffect(() => {
     window.difyChatbotConfig = {
-      token: "GyKUm3Gio7gZebtD",
+      token: "vkfBoWzcVWQfh6bS",
       inputs: {},
       systemVariables: {},
       userVariables: {},
@@ -30,14 +30,32 @@ export default function ResumePage() {
 
     const script = document.createElement("script");
     script.src = "https://udify.app/embed.min.js";
-    script.id = "GyKUm3Gio7gZebtD";
+    script.id = "vkfBoWzcVWQfh6bS";
     script.defer = true;
     document.body.appendChild(script);
 
+    const style = document.createElement("style");
+    style.id = "dify-custom-style";
+    style.innerHTML = `
+      #dify-chatbot-bubble-button { 
+        background-color: #1C64F2 !important; 
+      } 
+      #dify-chatbot-bubble-window { 
+        width: 24rem !important; 
+        height: 40rem !important; 
+      }
+    `;
+    document.head.appendChild(style);
+
     return () => {
-      const existingScript = document.getElementById("GyKUm3Gio7gZebtD");
+      const existingScript = document.getElementById("vkfBoWzcVWQfh6bS");
       if (existingScript) {
         document.body.removeChild(existingScript);
+      }
+
+      const existingStyle = document.getElementById("dify-custom-style");
+      if (existingStyle) {
+        document.head.removeChild(existingStyle);
       }
 
       const difyBubble = document.getElementById("dify-chatbot-bubble-button");

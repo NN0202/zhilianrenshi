@@ -34,7 +34,7 @@ export default function TalentGraph() {
 
     const getNodeLabel = (node) => {
       if (node.type === "talent") {
-        return node.name;
+        return typeof node.name === "object" ? (node.name[language] || node.name.zh) : node.name;
       }
       return skillLabels[node.id]?.[language] ?? node.label;
     };

@@ -7,7 +7,7 @@ export const mockTalentNodes = [
     id: "talent-001",
     type: "talent",
     category: "mfg",
-    name: "马特强",
+    name: { zh: "马特强", en: "Strong Ma" },
     role: "自动化技术员",
     scores: {
       technical: 4,
@@ -24,7 +24,7 @@ export const mockTalentNodes = [
     id: "talent-002",
     type: "talent",
     category: "biz",
-    name: "陈思远",
+    name: { zh: "陈思远", en: "Kevin Chen" },
     role: "海外市场专员",
     scores: {
       technical: 2,
@@ -41,7 +41,7 @@ export const mockTalentNodes = [
     id: "talent-003",
     type: "talent",
     category: "rd",
-    name: "李研发",
+    name: { zh: "李研发", en: "Ryan Li" },
     role: "算法工程师",
     scores: {
       technical: 5,
@@ -58,7 +58,7 @@ export const mockTalentNodes = [
     id: "talent-004",
     type: "talent",
     category: "support",
-    name: "王支持",
+    name: { zh: "王支持", en: "Victor Wang" },
     role: "技术支持工程师",
     scores: {
       technical: 3,
@@ -89,17 +89,32 @@ export const mockEdges = [
   // talent-001 (mfg)
   { id: "e1", source: "talent-001", target: "skill-plc", type: "has-skill" },
   { id: "e2", source: "talent-001", target: "skill-cad", type: "has-skill" },
-  
+
   // talent-002 (biz)
-  { id: "e3", source: "talent-002", target: "skill-crossborder", type: "needs-skill" },
-  { id: "e4", source: "talent-002", target: "skill-malay", type: "needs-skill" },
+  {
+    id: "e3",
+    source: "talent-002",
+    target: "skill-crossborder",
+    type: "needs-skill",
+  },
+  {
+    id: "e4",
+    source: "talent-002",
+    target: "skill-malay",
+    type: "needs-skill",
+  },
 
   // talent-003 (rd)
   { id: "e5", source: "talent-003", target: "skill-python", type: "has-skill" },
   { id: "e6", source: "talent-003", target: "skill-ai", type: "has-skill" },
 
   // talent-004 (support)
-  { id: "e7", source: "talent-004", target: "skill-remote", type: "needs-skill" },
+  {
+    id: "e7",
+    source: "talent-004",
+    target: "skill-remote",
+    type: "needs-skill",
+  },
   { id: "e8", source: "talent-004", target: "skill-iot", type: "needs-skill" },
 ];
 
