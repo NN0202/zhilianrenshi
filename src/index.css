@@ -1,51 +1,153 @@
 :root {
-  /* 背景色系 */
-  --bg-base: #050d1a; /* 最深底色 */
-  --bg-surface: #0a1628; /* 卡片底色 */
-  --bg-elevated: #0f2040; /* 悬浮层 */
+  --bg-base: #f5f4ed;
+  --bg-surface: #faf9f5;
+  --bg-card: rgba(250, 249, 245, 0.88);
+  --bg-card-strong: #ffffff;
+  --bg-elevated: #ece8dc;
 
-  /* 主色调 */
-  --accent-primary: #00c8ff; /* 青蓝高亮（节点/按钮） */
-  --accent-secondary: #3b82f6; /* 蓝色次级 */
-  --accent-warn: #f59e0b; /* 橙色警告（缺口高） */
-  --accent-success: #10b981; /* 绿色（缺口低） */
-  --accent-danger: #ef4444; /* 红色（缺口极高） */
+  --accent-primary: #c96442;
+  --accent-secondary: #4d4c48;
+  --accent-warn: #b78036;
+  --accent-success: #6f8a55;
+  --accent-danger: #b53333;
 
-  /* 文字 */
-  --text-primary: #e2f0ff;
-  --text-secondary: #7aa0c4;
-  --text-muted: #3d6080;
+  --text-primary: #141413;
+  --text-secondary: #5e5d59;
+  --text-muted: #87867f;
+  --text-inverse: #faf9f5;
 
-  /* 图谱专用 */
-  --node-rd: #00c8ff; /* 技术研发节点 */
-  --node-mfg: #10b981; /* 制造运维节点 */
-  --node-biz: #f59e0b; /* 国际业务节点 */
-  --node-support: #a78bfa; /* 远程支持节点 */
-  --node-skill: #64748b; /* 技能标签节点 */
-  --node-skill-gap: #ef4444; /* 待培养技能节点（虚线红） */
+  --node-rd: #c96442;
+  --node-mfg: #7a8b5c;
+  --node-biz: #c18a3b;
+  --node-support: #8b6d5c;
+  --node-skill: #b9ad96;
+  --node-skill-gap: #b53333;
 
-  /* 边 */
-  --edge-solid: rgba(0, 200, 255, 0.4);
-  --edge-dashed: rgba(239, 68, 68, 0.5);
+  --edge-solid: rgba(94, 93, 89, 0.26);
+  --edge-dashed: rgba(181, 51, 51, 0.34);
 
-  /* 字体 */
-  --font-display: "Orbitron", monospace; /* 标题/数字 */
-  --font-body: "Noto Sans SC", sans-serif; /* 正文/中文 */
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
 
-  /* 玻璃效果 */
-  --glass-bg: rgba(10, 22, 40, 0.7);
-  --glass-border: rgba(0, 200, 255, 0.15);
-  --glass-blur: 12px;
+  --glass-bg: rgba(250, 249, 245, 0.9);
+  --glass-border: #e3ded1;
+  --glass-blur: 16px;
+
+  --shadow-ring: 0 0 0 1px rgba(209, 207, 197, 0.9);
+  --shadow-soft: 0 20px 60px rgba(20, 20, 19, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg-base);
 }
 
 body {
-  background-color: var(--bg-base);
+  margin: 0;
   color: var(--text-primary);
   font-family: var(--font-body);
-  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(201, 100, 66, 0.12), transparent 30%),
+    radial-gradient(circle at top right, rgba(122, 139, 92, 0.12), transparent 24%),
+    linear-gradient(180deg, #faf9f5 0%, #f5f4ed 50%, #f3efe5 100%);
+  line-height: 1.6;
 }
 
-/* Dify 聊天机器人自定义覆盖样式 */
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+select,
+input,
+textarea {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 152, 236, 0.2);
+  border-color: #3898ec !important;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.lang-select,
+.warm-field {
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: var(--bg-card-strong);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-ring);
+}
+
+.lang-select {
+  min-width: 112px;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.warm-field {
+  width: 100%;
+}
+
+.warm-field::placeholder {
+  color: var(--text-muted);
+}
+
+.brand-button {
+  border: 1px solid var(--accent-primary);
+  border-radius: 16px;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  padding: 12px 20px;
+  box-shadow: 0 0 0 1px rgba(201, 100, 66, 0.12);
+  cursor: pointer;
+}
+
+.brand-button:hover {
+  transform: translateY(-1px);
+  background: #ba5b3a;
+}
+
+.brand-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+  transform: none;
+}
+
+.soft-button {
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: var(--bg-card-strong);
+  color: var(--text-primary);
+  padding: 11px 18px;
+  box-shadow: var(--shadow-ring);
+  cursor: pointer;
+}
+
+.soft-button:hover {
+  background: var(--bg-elevated);
+}
+
 #dify-chatbot-bubble-button {
   background-color: var(--accent-primary) !important;
 }
@@ -55,6 +157,6 @@ body {
   height: calc(100vh - 100px) !important;
   max-height: 40rem !important;
   border: 1px solid var(--glass-border) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--shadow-soft) !important;
 }

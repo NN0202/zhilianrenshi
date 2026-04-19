@@ -5,20 +5,27 @@ import { mockTalentNodes, mockEdges } from "../api/mockData";
 // 用于将 AI 分析出来的非标技能名称映射为图谱中的标准节点 ID
 const SKILL_DICTIONARY = {
   "plc编程": "skill-plc",
+  "plc programming": "skill-plc",
   "cad制图": "skill-cad",
+  "cad drafting": "skill-cad",
   "python": "skill-python",
   "ai算法": "skill-ai",
+  "ai algorithms": "skill-ai",
   "远程诊断": "skill-remote",
+  "remote diagnostics": "skill-remote",
   "马来语": "skill-malay",
+  "malay": "skill-malay",
   "跨境合规": "skill-crossborder",
+  "cross-border compliance": "skill-crossborder",
   "iot协议": "skill-iot",
+  "iot protocols": "skill-iot",
 };
 
 // 技能归一化处理函数
 const skillNormalizer = (skillName) => {
   if (!skillName) return null;
   const normalizedLabel = skillName.trim();
-  const lowerLabel = normalizedLabel.toLowerCase();
+  const lowerLabel = normalizedLabel.toLowerCase().replace(/\s+/g, " ");
   
   // 查找标准词典
   if (SKILL_DICTIONARY[lowerLabel]) {

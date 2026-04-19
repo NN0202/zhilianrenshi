@@ -1,54 +1,59 @@
-import React from "react";
 import TalentGraph from "./TalentGraph";
 import { useTalentStore } from "../../store/talentStore";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 export default function GraphPage() {
   const gapFilter = useTalentStore((state) => state.gapFilter);
   const setGapFilter = useTalentStore((state) => state.setGapFilter);
+  const { copy } = useLanguage();
 
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "calc(100vh - 56px)",
+        height: "calc(100vh - 72px)",
+        padding: "24px 24px 28px 24px",
+        gap: "18px",
       }}
     >
-      {/* 顶部控制栏区域占位 */}
       <div
         style={{
-          height: "56px",
-          padding: "0 24px",
+          padding: "18px 22px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          borderBottom: "1px solid var(--glass-border)",
-          backgroundColor: "var(--bg-surface)",
+          gap: "16px",
+          border: "1px solid var(--glass-border)",
+          borderRadius: "24px",
+          backgroundColor: "var(--glass-bg)",
+          boxShadow: "var(--shadow-soft)",
+          flexWrap: "wrap",
         }}
       >
-        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
           <span
             style={{
-              fontSize: "16px",
-              fontWeight: "bold",
+              fontSize: "28px",
+              fontWeight: 500,
               fontFamily: "var(--font-display)",
             }}
           >
-            企业人才技能图谱
+            {copy.graph.title}
           </span>
           {gapFilter === "high" && (
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
               <span
                 style={{
                   fontSize: "12px",
-                  padding: "4px 8px",
-                  backgroundColor: "rgba(239, 68, 68, 0.2)",
+                  padding: "6px 10px",
+                  backgroundColor: "rgba(181, 51, 51, 0.1)",
                   color: "var(--accent-danger)",
-                  borderRadius: "4px",
-                  border: "1px solid rgba(239, 68, 68, 0.5)",
+                  borderRadius: "999px",
+                  border: "1px solid rgba(181, 51, 51, 0.2)",
                 }}
               >
-                高缺口岗位高亮中
+                {copy.graph.highGapActive}
               </span>
               <button
                 onClick={() => setGapFilter(null)}
@@ -57,23 +62,29 @@ export default function GraphPage() {
                   border: "none",
                   color: "var(--text-secondary)",
                   cursor: "pointer",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   textDecoration: "underline",
                 }}
               >
-                清除过滤
+                {copy.graph.clearFilter}
               </button>
             </div>
           )}
         </div>
-        <div style={{ fontSize: "13px", color: "var(--text-muted)" }}>
-          支持鼠标拖拽节点与滚轮缩放画布
-        </div>
+        <div style={{ fontSize: "14px", color: "var(--text-muted)" }}>{copy.graph.hint}</div>
       </div>
 
-      {/* 主体区域：左侧图谱画布 + 右侧详情占位 */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        {/* 左侧画布，暂占满整个宽度，后续如果开发详情面板可以调整 width */}
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          overflow: "hidden",
+          borderRadius: "28px",
+          border: "1px solid var(--glass-border)",
+          boxShadow: "var(--shadow-soft)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+        }}
+      >
         <div style={{ flex: 1, position: "relative" }}>
           <TalentGraph />
         </div>

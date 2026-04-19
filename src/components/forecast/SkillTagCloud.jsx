@@ -1,65 +1,67 @@
-import React from 'react';
+import { useLanguage } from "../../i18n/LanguageContext";
+import { tagLabels } from "../../i18n/translations";
 
 const tags = [
-  { label: "跨境合规", weight: 9, color: "var(--node-skill-gap)" },
-  { label: "海外客户拓展", weight: 8, color: "var(--node-skill-gap)" },
-  { label: "马来语", weight: 8, color: "var(--node-skill-gap)" },
-  { label: "远程诊断", weight: 7, color: "var(--node-skill-gap)" },
-  { label: "供应链管理", weight: 7, color: "var(--accent-warn)" },
-  { label: "跨文化沟通", weight: 6, color: "var(--accent-warn)" },
-  { label: "IoT协议", weight: 6, color: "var(--node-skill-gap)" },
-  { label: "AI算法", weight: 5, color: "var(--node-skill)" },
-  { label: "数据分析", weight: 5, color: "var(--node-skill)" },
-  { label: "PLC编程", weight: 4, color: "var(--node-skill)" },
-  { label: "系统集成", weight: 4, color: "var(--node-skill)" },
+  { key: "skill-crossborder", weight: 9, color: "var(--node-skill-gap)" },
+  { key: "overseasExpansion", weight: 8, color: "var(--node-skill-gap)" },
+  { key: "skill-malay", weight: 8, color: "var(--node-skill-gap)" },
+  { key: "skill-remote", weight: 7, color: "var(--node-skill-gap)" },
+  { key: "supplyChain", weight: 7, color: "var(--accent-warn)" },
+  { key: "crossCultural", weight: 6, color: "var(--accent-warn)" },
+  { key: "skill-iot", weight: 6, color: "var(--node-skill-gap)" },
+  { key: "skill-ai", weight: 5, color: "var(--node-skill)" },
+  { key: "dataAnalysis", weight: 5, color: "var(--node-skill)" },
+  { key: "skill-plc", weight: 4, color: "var(--node-skill)" },
+  { key: "systemIntegration", weight: 4, color: "var(--node-skill)" },
 ];
 
 export default function SkillTagCloud() {
+  const { language } = useLanguage();
+
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexWrap: 'wrap', 
-      gap: '16px', 
-      alignItems: 'center', 
-      padding: '12px 0' 
-    }}>
-      {tags.map((tag, idx) => {
-        // 字体大小范围：12px ~ 28px
-        const fontSize = 12 + (tag.weight - 4) * 3.2; 
-        // 缺口越高的技能，透明度越高
-        const opacity = 0.6 + (tag.weight / 10) * 0.4;
-        
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "14px",
+        alignItems: "center",
+        padding: "10px 0 4px 0",
+      }}
+    >
+      {tags.map((tag) => {
+        const fontSize = 13 + (tag.weight - 4) * 2.8;
+        const opacity = 0.6 + (tag.weight / 10) * 0.35;
+        const label = tagLabels[tag.key][language];
+
         return (
-          <span 
-            key={idx} 
+          <span
+            key={tag.key}
             style={{
               fontSize: `${fontSize}px`,
               color: tag.color,
-              opacity: opacity,
-              padding: '6px 16px',
-              backgroundColor: 'var(--bg-elevated)',
-              borderRadius: '24px',
-              border: `1px solid ${tag.color}40`,
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              userSelect: 'none',
-              fontWeight: tag.weight >= 7 ? 'bold' : 'normal',
-              boxShadow: `0 4px 12px ${tag.color}15`
+              opacity,
+              padding: "8px 16px",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              borderRadius: "999px",
+              border: `1px solid ${tag.color}33`,
+              transition: "all 0.3s ease",
+              cursor: "pointer",
+              userSelect: "none",
+              fontWeight: tag.weight >= 7 ? 600 : 500,
+              boxShadow: "var(--shadow-ring)",
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-              e.currentTarget.style.borderColor = tag.color;
-              e.currentTarget.style.boxShadow = `0 6px 16px ${tag.color}30`;
-              e.currentTarget.style.opacity = '1';
+            onMouseOver={(event) => {
+              event.currentTarget.style.transform = "translateY(-2px)";
+              event.currentTarget.style.borderColor = tag.color;
+              event.currentTarget.style.opacity = "1";
             }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.borderColor = `${tag.color}40`;
-              e.currentTarget.style.boxShadow = `0 4px 12px ${tag.color}15`;
-              e.currentTarget.style.opacity = opacity.toString();
+            onMouseOut={(event) => {
+              event.currentTarget.style.transform = "translateY(0)";
+              event.currentTarget.style.borderColor = `${tag.color}33`;
+              event.currentTarget.style.opacity = opacity.toString();
             }}
           >
-            {tag.label}
+            {label}
           </span>
         );
       })}
